@@ -57,7 +57,10 @@ function receiptHTML(order: Order, store: Store, settings: Settings, customer?: 
 
 export function printOrder(order: Order, store: Store, settings: Settings, customer?: Customer): void {
   const w = window.open('', '_blank', 'width=380,height=640');
-  if (!w) return;
+  if (!w) {
+    alert('Pop-ups are blocked. Please allow pop-ups for this site to print receipts, then try again.');
+    return;
+  }
   w.document.write(receiptHTML(order, store, settings, customer));
   w.document.close();
 }

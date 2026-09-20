@@ -77,7 +77,7 @@ export default function Topbar({ title, subtitle, actions }: { title: string; su
             className={cn('relative p-2.5 rounded-xl border transition', notifOpen ? 'bg-brand-light border-brand/30 text-brand' : 'border-slate-200 text-slate-500 hover:bg-slate-50')}
           >
             <Bell size={16} />
-            {low.length > 0 && <span className="absolute -top-1 -right-1 w-4.5 h-4.5 min-w-[18px] px-0.5 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center">{low.length}</span>}
+            {low.length > 0 && <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-0.5 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center">{low.length}</span>}
           </button>
           {notifOpen && (
             <>

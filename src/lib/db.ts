@@ -38,6 +38,7 @@ const DEFAULT_USERS: User[] = [
   { id: 'u-cash', name: 'Rohan Kale', role: 'cashier', storeId: 'amanora', pin: 'orison123' },
 ];
 
+// Cache lives only in the browser; on the server each render gets a fresh seed.
 let cache: DB | null = null;
 let seedCache: Seed | null = null;
 
@@ -47,6 +48,16 @@ export function getSeed(): Seed {
 }
 
 export function loadDB(): DB {
+  // On SSR there is no localStorage; never persist server-side.
+  if (typeof window === 'undefined') {
+    const seed = getSeed();
+    return {
+      version: 1, orders: [], held: [], customers: seed.customers,
+      stock: seed.stock, users: DEFAULT_USERS, adjustments: [],
+      refundedIds: [],
+      settings: { gstin: '27AABCO1234F1Z5', receiptFooter: 'Thank you for shopping at Orison Retail — Samsung Experience Store. GST invoice included. 7-day replacement on accessories.', lowStockDays: 10 },
+    };
+  }
   if (cache) return cache;
   try {
     const raw = typeof window !== 'undefined' ? window.localStorage.getItem(KEY) : null;

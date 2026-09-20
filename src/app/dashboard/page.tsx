@@ -23,6 +23,7 @@ function DashboardInner() {
   const { storeId, store, user } = useApp();
   const data = useData();
   if (!data) return <Loading />;
+  if (!user) return null;
 
   const now = Date.now();
   const t0 = startOfToday();

@@ -43,8 +43,9 @@ export function checkout(args: CheckoutArgs): Order {
     createdAt: Date.now(),
     orderDiscountPct: args.orderDiscountPct,
   };
+  db.stock[args.storeId] = db.stock[args.storeId] || {};
   for (const it of args.items) {
-    const cur = db.stock[args.storeId]?.[it.productId] ?? 0;
+    const cur = db.stock[args.storeId][it.productId] ?? 0;
     db.stock[args.storeId][it.productId] = Math.max(0, cur - it.qty);
   }
   if (args.customerId) {
@@ -91,8 +92,9 @@ export function refundOrder(orderId: string): void {
   const live = db.orders.find(x => x.id === orderId);
   if (live) live.status = 'refunded';
   db.refundedIds.push(orderId);
+  db.stock[o.storeId] = db.stock[o.storeId] || {};
   for (const it of o.items) {
-    const cur = db.stock[o.storeId]?.[it.productId] ?? 0;
+    const cur = db.stock[o.storeId][it.productId] ?? 0;
     db.stock[o.storeId][it.productId] = cur + it.qty;
   }
   if (o.customerId) {
@@ -113,7 +115,7 @@ export function adjustStock(productId: string, storeId: string, delta: number, r
 export function addCustomer(name: string, phone: string, storeId: string): Customer {
   const db = loadDB();
   const c: Customer = {
-    id: 'C' + (2000 + db.customers.length),
+    id: 'C' + Date.now().toString(36).toUpperCase(),
     name,
     phone,
     email: '',
