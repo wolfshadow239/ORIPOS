@@ -51,9 +51,9 @@ export function TrendChart({
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="#EEF2F7" vertical={false} />
         <XAxis dataKey={xKey} tick={axisStyle} axisLine={false} tickLine={false} interval="preserveStartEnd" />
-        <YAxis tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v: number) => compactINR(v)} width={56} />
+        <YAxis tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v) => compactINR(Number(v))} width={56} />
         <Tooltip
-          formatter={(v: number) => [compactINR(v), 'Revenue']}
+          formatter={(v) => [compactINR(Number(v)), 'Revenue']}
           contentStyle={tooltipStyle}
         />
         <Area type="monotone" dataKey={yKey} stroke="#1428A0" strokeWidth={2.5} fill="url(#gBrand)" />
@@ -71,7 +71,7 @@ export function DonutChart({ data, height = 260 }: { data: { name: string; value
             <Cell key={i} fill={PALETTE[i % PALETTE.length]} />
           ))}
         </Pie>
-        <Tooltip formatter={(v: number) => compactINR(v)} contentStyle={tooltipStyle} />
+        <Tooltip formatter={(v) => compactINR(Number(v))} contentStyle={tooltipStyle} />
       </PieChart>
     </ResponsiveContainer>
   );
@@ -92,9 +92,9 @@ export function HBars({
     <ResponsiveContainer width="100%" height={height}>
       <BarChart data={data} layout="vertical" margin={{ top: 4, right: 12, bottom: 0, left: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#EEF2F7" horizontal={false} />
-        <XAxis type="number" tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v: number) => compactINR(v)} />
+        <XAxis type="number" tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v) => compactINR(Number(v))} />
         <YAxis type="category" dataKey={yKey} tick={{ fontSize: 11, fill: '#475569' }} axisLine={false} tickLine={false} width={110} />
-        <Tooltip formatter={(v: number) => compactINR(v)} contentStyle={tooltipStyle} cursor={{ fill: '#F1F5F9' }} />
+        <Tooltip formatter={(v) => compactINR(Number(v))} contentStyle={tooltipStyle} cursor={{ fill: '#F1F5F9' }} />
         <Bar dataKey={xKey} fill="#1428A0" radius={[0, 8, 8, 0]} barSize={18} />
       </BarChart>
     </ResponsiveContainer>
@@ -125,8 +125,8 @@ export function ForecastChart({
       <ComposedChart data={merged} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#EEF2F7" vertical={false} />
         <XAxis dataKey="label" tick={axisStyle} axisLine={false} tickLine={false} interval="preserveStartEnd" />
-        <YAxis tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v: number) => compactINR(v)} width={56} />
-        <Tooltip formatter={(v: number, name: string) => [compactINR(v), name === 'actual' ? 'Actual' : name === 'forecast' ? 'Forecast' : '']} contentStyle={tooltipStyle} />
+        <YAxis tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v) => compactINR(Number(v))} width={56} />
+        <Tooltip formatter={(v, name) => [compactINR(Number(v)), name === 'actual' ? 'Actual' : name === 'forecast' ? 'Forecast' : '']} contentStyle={tooltipStyle} />
         <Area type="monotone" dataKey="lo" stackId="band" stroke="none" fill="#00A9E0" fillOpacity={0.12} name="lo" />
         <Area type="monotone" dataKey="band" stackId="band" stroke="none" fill="#00A9E0" fillOpacity={0.12} name="band" />
         <Line type="monotone" dataKey="actual" stroke="#1428A0" strokeWidth={2.5} dot={false} name="actual" />

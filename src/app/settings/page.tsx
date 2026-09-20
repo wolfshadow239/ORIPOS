@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Shell from '@/components/Shell';
 import { useApp } from '@/components/Providers';
 import { useData } from '@/components/hooks';
@@ -27,16 +27,7 @@ function SettingsInner() {
   const [footer, setFooter] = useState('');
   const [lowDays, setLowDays] = useState(10);
 
-  // Prime form values as soon as settings are available (and on reset)
-  useEffect(() => {
-    if (!data) return;
-    setGstin(data.settings.gstin);
-    setFooter(data.settings.receiptFooter);
-    setLowDays(data.settings.lowStockDays);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.settings.gstin, data?.settings.receiptFooter, data?.settings.lowStockDays]);
-
-  if (!data || !user) return <Loading />;
+  if (!data) return <Loading />;
 
   const loadIntoForm = () => {
     setGstin(data.settings.gstin);
@@ -69,13 +60,13 @@ function SettingsInner() {
               </div>
               <div>
                 <label className="text-xs font-semibold text-slate-500">GSTIN</label>
-                <Input className="mt-1.5" value={gstin} onChange={e => setGstin(e.target.value)} />
+                <Input className="mt-1.5" value={gstin || data.settings.gstin} onChange={e => setGstin(e.target.value)} />
               </div>
               <div>
                 <label className="text-xs font-semibold text-slate-500">LOW STOCK COVER (DAYS)</label>
-                <Input type="number" min={1} className="mt-1.5" value={lowDays} onChange={e => setLowDays(Number(e.target.value) || 10)} />
+                <Input type="number" min={1} className="mt-1.5" value={lowDays || data.settings.lowStockDays} onChange={e => setLowDays(Number(e.target.value) || 10)} />
               </div>
-              <Btn onClick={() => updateSettings({ gstin, receiptFooter: footer, lowStockDays: lowDays || 10 })}>
+              <Btn onClick={() => updateSettings({ gstin: gstin || data.settings.gstin, receiptFooter: footer || data.settings.receiptFooter, lowStockDays: lowDays || 10 })}>
                 Save changes
               </Btn>
             </div>
@@ -84,7 +75,7 @@ function SettingsInner() {
             <CardTitle>Receipt footer</CardTitle>
             <textarea
               className="w-full h-40 px-3 py-2.5 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand resize-none"
-              value={footer}
+              value={footer || data.settings.receiptFooter}
               onChange={e => setFooter(e.target.value)}
             />
             <p className="text-[11px] text-slate-400 mt-2">Printed at the bottom of every customer receipt.</p>
@@ -122,7 +113,7 @@ function SettingsInner() {
                           {u.name.split(' ').map(x => x[0]).join('').slice(0, 2)}
                         </div>
                         <span className="font-medium text-slate-800">{u.name}</span>
-                        {u.id === user.id && <Badge color="blue">you</Badge>}
+                        {u.id === user!.id && <Badge color="blue">you</Badge>}
                       </div>
                     </Td>
                     <Td><Badge color={ROLE_COLOR[u.role]}><ShieldCheck size={10} className="mr-1" />{u.role}</Badge></Td>

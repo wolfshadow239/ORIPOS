@@ -73,7 +73,7 @@ function AnalyticsInner() {
           insights: calc.insights,
         }),
       });
-      const j = await res.json() as { summary?: string };
+      const j = await res.json();
       setSummary(j.summary || 'No summary available.');
     } catch {
       setSummary(calc.insights.slice(0, 5).map(i => '• ' + i.title + ' — ' + i.body).join('\n\n'));

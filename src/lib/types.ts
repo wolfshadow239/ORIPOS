@@ -60,7 +60,6 @@ export interface Order {
   status: OrderStatus;
   createdAt: number;
   orderDiscountPct?: number;
-  note?: string;
 }
 
 export interface Customer {

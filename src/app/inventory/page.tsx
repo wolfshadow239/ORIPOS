@@ -41,7 +41,7 @@ function InventoryInner() {
       .filter(({ info }) => (onlyLow ? (info ? info.daysLeft <= data.settings.lowStockDays : false) : true));
   }, [data, q, cat, onlyLow, storeId, planById]);
 
-  if (!data || !user) return <Loading />;
+  if (!data) return <Loading />;
   const lowCount = plan.filter(r => r.daysLeft <= data.settings.lowStockDays || r.stock === 0).length;
 
   return (
@@ -80,7 +80,7 @@ function InventoryInner() {
             <option value="All">All categories</option>
             {CATEGORIES.map(c => <option key={c}>{c}</option>)}
           </Select>
-          {user.role === 'admin' && (
+          {user!.role === 'admin' && (
             <Select value={storeId} onChange={e => setStoreId(e.target.value)}>
               {data.stores.map(s => <option key={s.id} value={s.id}>{s.short}</option>)}
             </Select>

@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Bell, Store as StoreIcon, LogOut, CalendarDays } from 'lucide-react';
 import { useApp } from './Providers';
@@ -10,7 +10,7 @@ import { lowStockList } from '@/lib/ai';
 import { STORES } from '@/lib/stores';
 import { Badge, cn } from './ui';
 
-export default function Topbar({ title, subtitle, actions }: { title: string; subtitle?: string; actions?: React.ReactNode }) {
+export default function Topbar({ title, subtitle, actions }: { title: string; subtitle?: string; actions?: ReactNode }) {
   const { user, store, storeId, setStoreId, logout } = useApp();
   const data = useData();
   const router = useRouter();

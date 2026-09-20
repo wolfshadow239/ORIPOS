@@ -38,8 +38,8 @@ function OrdersInner() {
       .slice(0, 120);
   }, [data, q, status, storeId]);
 
-  if (!data || !user) return <Loading />;
-  const canRefund = user.role !== 'cashier';
+  if (!data) return <Loading />;
+  const canRefund = user!.role !== 'cashier';
 
   return (
     <Card pad={false}>

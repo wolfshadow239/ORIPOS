@@ -23,7 +23,6 @@ function DashboardInner() {
   const { storeId, store, user } = useApp();
   const data = useData();
   if (!data) return <Loading />;
-  if (!user) return null;
 
   const now = Date.now();
   const t0 = startOfToday();
@@ -110,7 +109,7 @@ function DashboardInner() {
             xKey="revenue"
             height={272}
           />
-          {user.role === 'admin' && (
+          {user?.role === 'admin' && (
             <p className="text-[11px] text-slate-400 mt-2">Scoped data shown for {store.short} — switch stores from the top bar.</p>
           )}
         </Card>

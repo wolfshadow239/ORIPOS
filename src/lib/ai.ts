@@ -116,7 +116,7 @@ export function buildInsights(
       'info',
       'Forecast',
       `Next 7 days projected at ${compactINR(round2(next7))}`,
-      `Trend + weekday seasonality model. 80% confidence band: ${compactINR(fc[0].lo)} – ${compactINR(fc[fc.length - 1].hi)} on ${fc[fc.length - 1].label}.`,
+      `Trend + weekday seasonality model. 80% confidence band: ${compactINR(fc[0].lo)} – ${compactINR(fc[6].hi)} on ${fc[6].label}.`,
     );
   }
 
