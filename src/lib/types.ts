@@ -1,4 +1,3 @@
-
 export type Role = 'admin' | 'manager' | 'cashier';
 export type PayMethod = 'cash' | 'card' | 'upi' | 'credit';
 export type OrderStatus = 'completed' | 'held' | 'refunded';
@@ -60,6 +59,7 @@ export interface Order {
   status: OrderStatus;
   createdAt: number;
   orderDiscountPct?: number;
+  note?: string;
 }
 
 export interface Customer {
